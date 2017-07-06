@@ -3,7 +3,7 @@
 
 !Bienvenido al repositorio del curso introductorio al lenguaje de programación SuperCollider!
 
-Aquí encontrarás material útil para seguir el curso además del código de cada lección. El material disponible es absolutamente gratuito y puede ser usado y modificado sin ninguna restricción. 
+Aquí encontrarás material útil para seguir el curso además del código de cada lección. El material disponible es absolutamente gratuito y puede ser usado y modificado sin ninguna restricción. Encuentra en la sección de contenidos pequeños fragmentos que sirven de síntesis de lo visto en cada capítulo. Para descargar todo el material en un archivo ZIP haz click aquí.
 
 ## Contenidos
 
@@ -66,6 +66,38 @@ Sumando ondas sinusoides...
 ```js
 { var n = 5; var sins = n.collect{|i| SinOsc.ar(100 + ((i+1) * 100), 0, 1/n) }; sins.sum }.play; 
 ```
+9. Síntesis substractiva
 
+Menos es más...
 
+```js
+{var ruido = WhiteNoise.ar(0.5); var filtro = LPF.ar(ruido, LFSaw.kr(0.5).range(20, 1000)); filtro }.play;
+```
+10. Envolventes
 
+Controlando parámetros con funciones de forma 
+
+```js
+{var env = EnvGen.kr(Env.perc(0.001, 1.0), doneAction:2); SinOsc.ar(440) * env }.play;
+```
+11. SynthDefs
+
+Creando un instrumento re-utilizable
+
+```js
+(
+SynthDef(\sinusoide, { |freq = 220, amp = 0.5|
+	var sin = SinOsc.ar(freq);
+	var env = EnvGen.kr(Env.perc(0.01, 1), doneAction: 2);
+	var sonido = sin * env;
+	sonido = sonido * amp;
+	Out.ar(0, sonido ! 2);
+}).add;
+)
+
+Synth(\sinusoide, [\freq, 400, \amp, 0.6]);
+Synth(\sinusoide, [\freq, 700, \amp, 0.6]);
+```
+12. Música algorítimica
+
+Un pequeño programa de música generativa
