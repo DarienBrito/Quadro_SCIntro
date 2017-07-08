@@ -98,6 +98,12 @@ SynthDef(\sinusoide, { |freq = 220, amp = 0.5|
 Synth(\sinusoide, [\freq, 400, \amp, 0.6]);
 Synth(\sinusoide, [\freq, 700, \amp, 0.6]);
 ```
-12. Música algorítimica
+12. Rutinas 
+
+```js
+fork{ inf.do{|i| i.postln; 1.wait; } };
+```
+
+13. Bonus
 
 Un pequeño programa de música generativa
