@@ -7,19 +7,19 @@ Aquí encontrarás material útil para seguir el curso además del código de ca
 
 ## Contenidos
 
-1. Código de cada módulo [->](https://github.com/DarienBrito/Quadro_SCIntro/tree/master/codigo_modulos)
+1. [Código de cada módulo](https://github.com/DarienBrito/Quadro_SCIntro/tree/master/codigo_modulos)
 
 Encontrarás aqui archivos con todo el código que hemos visto en los vídeos del tutorial.
 
-2. Transcripciones [->](https://github.com/DarienBrito/Quadro_SCIntro/tree/master/transcripciones)
+2. [Transcripciones](https://github.com/DarienBrito/Quadro_SCIntro/tree/master/transcripciones)
 
 Si quieres tener un documento con una transcripción de lo que vimos en los vídeos, puedes acceder a esta carpeta y descargar los archivos
 
-3. Información preliminar [->] (https://github.com/DarienBrito/Quadro_SCIntro/tree/master/info_preliminar_LaTeX)
+3. [Información preliminar](https://github.com/DarienBrito/Quadro_SCIntro/tree/master/info_preliminar_LaTeX)
 
 El archivo PDF con información preliminar sobre el curso fue generado usando LaTeX, un lenguaje de programación para archivos de texto en alta calidad. Encontrarás aquí el código fuente para generar este texto además del PDF final.
 
-4. Sonidos de introducción
+4. [Sonidos de introducción]()
 
 Cada módulo en nuestro tutorial tiene su propio sonido introductorio. Encontrarás aquí el código con el que generé esos sonidos.
 
