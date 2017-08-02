@@ -3,7 +3,7 @@
 
 ¡Bienvenid@ al repositorio del curso introductorio al lenguaje de programación SuperCollider!
 
-Aquí encontrarás material útil para seguir el curso además del código de cada lección. El material disponible es absolutamente gratuito y puede ser usado y modificado sin ninguna restricción. Encuentra en la sección de contenidos pequeños fragmentos que sirven de síntesis de lo visto en cada capítulo. Para descargar todo el material en un archivo ZIP haz click [aquí]().
+Aquí encontrarás material útil para seguir el curso además del código de cada lección. El material disponible es absolutamente gratuito y puede ser usado y modificado sin ninguna restricción. Encuentra en la sección de contenidos pequeños fragmentos que sirven de síntesis de lo visto en cada capítulo. Para descargar todo el material en un archivo ZIP haz click en "Clone or Download" y "Download ZIP"
 
 ## Contenidos
 
