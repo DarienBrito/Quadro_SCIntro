@@ -1,0 +1,145 @@
+{\rtf1\ansi\ansicpg1252\cocoartf1404\cocoasubrtf470
+{\fonttbl\f0\fswiss\fcharset0 Helvetica;}
+{\colortbl;\red255\green255\blue255;}
+\paperw11900\paperh16840\margl1440\margr1440\vieww15360\viewh13120\viewkind0
+\pard\tx566\tx1133\tx1700\tx2267\tx2834\tx3401\tx3968\tx4535\tx5102\tx5669\tx6236\tx6803\pardirnatural\partightenfactor0
+
+\f0\fs24 \cf0 S\'edntesis substractiva es el proceso opuesto a s\'edntesis aditiva, es decir consiste en esculpir sonidos mediante reducci\'f3n de frecuencias.\
+\
+\'a1La mejor forma de explicar en qu\'e9 consiste la s\'edntesis substractiva es utilizando ruido!\
+\
+Existen varios generadores de ruido en SuperCollider. Por ahora, vamos a ver solamente dos:\
+\
+WhiteNoise.ar(mul: amplitud); // ruido blanco, todo el espectro tiene el mismo poder\
+PinkNoise.ar(mul: amplitud); // ruido rosa, el espectro decae en poder 3db por cada octava\
+\
+Al realizar s\'edntesis substractiva usamos filtros. Estos se encargan de descartar frecuencias no deseadas en el espectro sonoro. A diferencia de s\'edntesis aditiva esta t\'e9cnica consiste en reducir el contenido de una se\'f1al.\
+\
+Aqui una lista de los filtros m\'e1s comunes, voy a usar los nombres en ingl\'e9s dado que es la terminolog\'eda dominante en aplicaciones de audio:\
+\
+// Low Pass Filter (descarta agudos)\
+LPF.ar(in: se\'f1al, freq: l\'edmite, mul: amplitud);\
+\
+// Hi Pass Filter (descarta graves)\
+HPF.ar(in: se\'f1al, freq: l\'edmite, mul: amplitud);\
+\
+// Band Pass Filter (descarta frecuencias fuera de la banda especificada)\
+BPF.ar(in: se\'f1al, freq: l\'edmite, rq: ancho de banda, mul: amplitud);\
+\
+// Notch Filter (descarta frecuencias dentro de la banda especificada)\
+Notch.ar(in: se\'f1al, freq: l\'edmite, rq: ancho de banda, mul: amplitud)\
+\
+// Resonant Filter (filtro resonante en la banda especificada)\
+Resonz.ar(in: se\'f1al, freq: l\'edmite, bwr: ancho de banda, mul: amplitud)\
+\
+Probemos observando el efecto de estos filtros sobre una se\'f1al de ruido blanco.\
+\
+Antes de empezar, presiona cmd + alt + m para invocar el espectroscopio del servidor o evalua esta l\'ednea:\
+\
+FreqScope.new(400, 200, 0, server: s); \
+\
+Escribamos funciones que podamos controlar con nuestro rat\'f3n en el axis X. Empecemos con un Low Pass Filter. MouseX va a modular la frecuencia de corte de nuestro filtro, en el caso de nuestro Low Pass Filter, todo lo que sea mayor al limite determinado por mouse X va a ser cancelado mientras que lo que sea menor al l\'edmite pasa.\
+\
+\{ LPF.ar(WhiteNoise.ar(1), MouseX.kr(100, 20000)) * 0.25; \}.play; // descarta agudos\
+\
+Con esta misma l\'f3gica, escribamos funciones para los otros tipos de filtros:\
+\
+\{ HPF.ar(WhiteNoise.ar(1), MouseX.kr(100, 20000)) * 0.25; \}.play; // descarta graves\
+\{ BPF.ar(WhiteNoise.ar(1), MouseX.kr(100, 20000), 0.5) * 0.25; \}.play;// descarta fuera de banda\
+\{ Notch.ar(WhiteNoise.ar(1), MouseX.kr(100, 20000), 1) * 0.25; \}.play; // descarga dentro de banda\
+\{ Resonz.ar(WhiteNoise.ar(1), MouseX.kr(100, 20000), 0.1) * 0.25; \}.play; // banda resonante\
+\
+Espero el principio quede claro.\
+\
+Realicemos ahora un programa simple modulando la frecuencia de corte del filtro con osciladores\
+\
+(\{\
+	var modFrec = VarSaw.kr(0.15).range(20, 15000); // onda triangular en el rango 20 a 15000\
+	var modBanda = SinOsc.ar(30).range(0.1, 2.0);\
+	var filtro = Resonz.ar(WhiteNoise.ar(1), modFrec, modBanda);\
+	var amp = 0.5;\
+	filtro * amp;\
+\}.play\
+)\
+\
+PAUSA\
+\
+\
+\
+\
+Tras entender el algoritmo anterior, podemos moldear nuestros sonidos usando bandas espec\'edficas usando resonadores. Recuerdas el objeto Klang del cap\'edtulo anterior? DynKlank es un Ugen dise\'f1ado para s\'edntesis substantiva que funciona de una forma muy similar a Klang:\
+\
+DynKlank.ar(\
+	specificationsArrayRef: array de arrays [frecuencias, amplitudes, tiempo de resonancia],\
+	input: sonido al que filtrar,\
+	freqscale: escalador para las frecuencias,\
+	freqoffset: compensaci\'f3n para las frecuencias,\
+	decayscale: escalador para el tiempo de resonancia\
+)\
+\
+\
+Usemos los resonadores con ruido blanco\
+(\
+\{\
+	var ruido = WhiteNoise.ar(1);\
+	var frecs = [300, 500, 800, 1600];\
+	var amps = [1, 1, 1, 1];\
+	var resonanciasT = [1, 1, 1, 1];\
+	var resonador = DynKlank.ar(`[frecs, amps, resonanciasT], ruido * 0.25);\
+	resonador * 0.015;\
+\}.play;\
+)\
+\
+\
+Probemos los resonadores con impulsos al azar. Impulsos son se\'f1ales inmediatas que ocurren en un intervalo dado, para este ejemplo, vamos a utilizar Dust, que genera impulsos al azar.\
+(\
+\{\
+	var impulsos = Dust.ar(40); // UGen, produce impulsos al azar\
+	var frecs = [300, 500, 800, 1600];\
+	var amps = [1, 1, 1, 1];\
+	var resonanciasT = [1, 1, 1, 1];\
+	var resonador = DynKlank.ar(`[frecs, amps, resonanciasT], impulsos * 0.25);\
+	resonador * 0.15;\
+\}.play;\
+)\
+\
+En el anterior cap\'edtulo, escribimos una funci\'f3n para generar valores al azar. La ventaja de escribir funciones, es que podemos reutilizarlas en diferentes contextos. reciclemos las funci\'f3n genVals que escribimos haciendo unos peque\'f1os cambios para producir valores al azar para nuestros resonadores.\
+\
+(\
+~genVals = \{|n|\
+	var frecs = n.collect\{|i| rrand(200, 12000) \}; // frecuencias al azar entre 80 y 12000hz\
+	var amps = n.collect\{|i| 1.0.rand \}; // valores al azar entre 0.0 y 1.0\
+	var resonanciaT = n.collect\{|i| 1.0.rand \}; // array de tiempos de resonancia al azar\
+	[frecs, amps, resonanciaT];\
+\};\
+\
+~resonadores = \{ | numero_resonadores, densidad = 40 |\
+	\{\
+		var impulsos = Dust.ar(densidad);\
+		var valores = ~genVals.(numero_resonadores);\
+		var resonador = DynKlank.ar(`valores, impulsos * 0.25);\
+		resonador * 0.15;\
+	\}.play;\
+\};\
+)\
+\
+~resonadores.(10, 20); // 10 resonadores, densidad 20\
+~resonadores.(1, 60); // 1 resonador, densidad 60\
+~resonadores.(40, 10);\
+\
+En el cap\'edtulo siguiente, vamos a aprender a controlar par\'e1metros con m\'e1s detalle, usando envolventes o \'93envelopes\'94\
+\
+\
+\
+\
+\
+\
+\
+\
+\
+\
+\
+\
+\
+\
+}

@@ -1,0 +1,141 @@
+{\rtf1\ansi\ansicpg1252\cocoartf1404\cocoasubrtf470
+{\fonttbl\f0\fswiss\fcharset0 Helvetica;}
+{\colortbl;\red255\green255\blue255;}
+\paperw11900\paperh16840\margl1440\margr1440\vieww10800\viewh8400\viewkind0
+\pard\tx566\tx1133\tx1700\tx2267\tx2834\tx3401\tx3968\tx4535\tx5102\tx5669\tx6236\tx6803\pardirnatural\partightenfactor0
+
+\f0\b\fs24 \cf0 Frontal
+\b0 \
+\
+Hemos aprendido hasta ahora los bloques b\'e1sicos para comenzar a programar sonidos. Nos falta sin embargo entender c\'f3mo crear series de instrucciones cuya funcionalidad podamos re-utilizar. En este cap\'edtulo aprenderemos a crear funciones y trataremos de entender c\'f3mo modelarlas de forma que sean re-utilizables.\
+\
+
+\b C\'f3digo\
+\
+\pard\tx566\tx1133\tx1700\tx2267\tx2834\tx3401\tx3968\tx4535\tx5102\tx5669\tx6236\tx6803\pardirnatural\partightenfactor0
+
+\b0 \cf0 Una funci\'f3n es la definici\'f3n de una serie de instrucciones encapsuladas en un objeto re-utilizable.\
+\
+Funciones se definen con los los s\'edmbolos de llave: \{ \}\
+\
+(\
+var hola = \{ "\'a1hola mundo!".postln; \}; // una funci\'f3n asignada a una variable llamada hola\
+hola; // la variable hola es una funci\'f3n que al ser ejecutada imprime "\'a1hola mundo!"\
+)\
+\
+No vemos sin embargo nada impreso en la consola, sino la palabra \'93Function\'94. Esto es, porque el objeto hola es una funci\'f3n que se est\'e1 reportando a s\'ed mismo. Para ejecutar la funci\'f3n, necesitamos usar el m\'e9todo .value\
+\
+(\
+var hola = \{ "\'a1hola mundo!".postln; \};\
+hola.value; // .value es el m\'e9todo para ejecutar la funci\'f3n\
+)\
+\
+Creemos ahora una funci\'f3n con una variable global que podemos reutilizar. Nuestra funci\'f3n va a randomizar el orden de la palabra "desorden" en cada ejecuci\'f3n\
+\
+f = \{ "desorden".scramble \}; // la funci\'f3n\
+f.value; // podemos evaluar esto m\'faltiples veces para resultados distintos\
+\
+\'bfPor qu\'e9 nos tomamos la molestia de crear funciones cuando podr\'edamos simplemente evaluar la l\'ednea:\
+\
+"desorden".scramble;\
+\
+y tener los mismos resultados?\
+\
+La cuesti\'f3n es que el verdadero poder de una funci\'f3n aparece cuando introducimos argumentos.\
+\
+\pard\tx566\tx1133\tx1700\tx2267\tx2834\tx3401\tx3968\tx4535\tx5102\tx5669\tx6236\tx6803\pardirnatural\partightenfactor0
+
+\b \cf0 Explicaci\'f3n
+\b0 \
+\
+Argumentos son como compuertas mediante las cuales pasamos valores que son usados dentro de una funci\'f3n. \
+\
+Imaginemos que estamos en una f\'e1brica en donde una m\'e1quina pone estampas a cualquier objeto que pasa por una compuerta. Digamos que la compuerta en uso solo pasa cartas. La m\'e1quina por tanto estampa siempre una carta. Ahora, digamos que la f\'e1brica quiere expandir sus capacidades pero no quiere gastar dinero. En lugar de comprar otra m\'e1quina de estampas, decide en cambio crear una compuerta por la que pasan libros. Ahora la m\'e1quina es capaz de estampar den una carta o un libro, a pesar de que es la misma m\'e1quina.    \
+\
+De forma similar, los argumentos para funciones, funcionan como compuertas mediante las cuales podemos pasar objetos distintos.\
+\
+
+\b C\'f3digo
+\b0 \
+\
+Ahora imaginemos que necesitamos un programa que divida CUALQUIER numero por 2 y lo multiplique luego por el valor de PI. Podemos encapsular la parte invariable de este algoritmo dentro de la funci\'f3n y crear una compuerta para la parte variable, definiendo as\'ed una funci\'f3n re-utilizable. M\'e1s o menos como en el ejemplo de nuestra f\'e1brica.\
+\
+En SuperCollider, los argumentos se crean con la palabra clave arg\
+\
+f = \{ 4 / 2 * pi \}; //esta funci\'f3n siempre divide 4 por 2 y multiplica el resultado por pi\
+f.value; \
+\
+Lo que queremos, es que sea capaz de realizar esa operaci\'f3n con cualquier n\'famero! Creamos entonces una compuerta usando un argumento.\
+\
+f = \{arg num; num / 2 * pi \}; // nuestra funci\'f3n. Recuerda: el valor pi esta predefinido en SC\
+\
+Ahora podemos pasar cualquier valor num\'e9rico por esta compuerta:\
+f.value(1)\
+f.value(2)\
+f.value(3)\
+\
+\'bfQueda claro?\
+\
+Veamos otro modo de escribir lo mismo:\
+La\
+(\
+f = \{ arg x;\
+	x / 2 * pi;\
+\};\
+)\
+\
+Esta sintaxis es preferible cuando las funciones son m\'e1s complejas ya que de esta manera las instrucciones tienen m\'e1s claridad. Como puedes ver, los espacios o tabulaciones en SuperCollider no tienen significado.\
+\
+f.value(10);\
+f.value(0.5);\
+f.value(100);\
+\
+Finalmente, una \'faltima abreviaci\'f3n, que es la que vamos a usar de ahora en adelante al crear funciones:\
+\
+(\
+f = \{ | x | // estos s\'edmbolos | | son la abreviaci\'f3n de arg y el ;\
+	x / 2 * pi;\
+\};\
+)\
+\
+f.value(10);\
+f.value(50);\
+\
+Hagamos un peque\'f1o par\'e9ntesis para aclarar algo muy importante al realizar computaciones. El orden de ejecuci\'f3n en SuperCollider es de izquierda a derecha, no es jer\'e1rquico. Si escribimos:\
+\
+1 + 2 * 3; Qu\'e9 resultado esperas?\
+\
+Aj\'e1, vemos que nos da 9, pese a que si respetamos la jerarqu\'eda aritm\'e9tica tendr\'eda que ser 7. Por esto como buena pr\'e1ctica es mejor siempre ser espec\'edficos usando par\'e9ntesis para definir la operaci\'f3n deseada:\
+\
+(1 + 2) * 3; // 9\
+1 + (2 * 3); // 7\
+\
+Finalmente, observemos que al crear una funci\'f3n podemos asignar cuantos argumentos se deseen y su denominaci\'f3n pueden ser cualquier palabra siempre y cuando no empiece con may\'fasculas o n\'fameros. Para entender esto, observemos la siguiente funci\'f3n:\
+\
+(\
+f = \{ arg nombre, apellido, edad;\
+	var n, a, e;\
+	n = "Mi nombre es: %".format(nombre); //el m\'e9todo format substituye % por un objeto dado\
+	a = "Mi apellido es: %".format(apellido);\
+	e = "Mi edad es %".format(edad);\
+	n.postln;\
+	a.postln;\
+	e.postln;\
+\};\
+)\
+\
+f.value("Darien", "Brito", 29);\
+f.value("Nikola", "Tesla", 87);\
+\
+\'bfPuedes entender lo que est\'e1 pasando?\
+\
+\
+\
+\
+\
+\
+\
+\
+\
+\
+ }

@@ -1,0 +1,78 @@
+{\rtf1\ansi\ansicpg1252\cocoartf1404\cocoasubrtf470
+{\fonttbl\f0\fswiss\fcharset0 Helvetica;}
+{\colortbl;\red255\green255\blue255;}
+\paperw11900\paperh16840\margl1440\margr1440\vieww11380\viewh11840\viewkind0
+\pard\tx566\tx1133\tx1700\tx2267\tx2834\tx3401\tx3968\tx4535\tx5102\tx5669\tx6236\tx6803\pardirnatural\partightenfactor0
+
+\f0\b\fs24 \cf0 C\'f3digo
+\b0 \
+\
+Estamos listos para escribir nuestro primer programa.\
+\
+T\'edpicamente, en todo lenguaje de programaci\'f3n, lo primero que escribimos es un programa que imprime \'93\'a1Hola Mundo!\'94 en la consola.\
+\
+Procedamos a escribir lo siguiente\
+\
+\'93\'a1hola mundo!\'94.postln;\
+\
+Toda l\'ednea que queremos ejecutar en SuperCollider tiene que ser evaluada por el int\'e9rprete. Para ejecutar una l\'ednea usamos la combinaci\'f3n cmd + enter.\
+\
+Hacemos click en la l\'ednea a ser evaluada y presionamos la combinaci\'f3n. Vemos que nuestro programa efectivamente imprime Hola Mundo en nuestra consola.\
+\
+\'a1Felicidades, has escrito tu primer programa!\
+\
+Analicemos ahora lo que hemos escrito.\
+\
+\'a1hola mundo!; // qu\'e9 ocurre si ejecutamos esta l\'ednea?\
+\
+Tenemos un error. \'bfY esta?\
+\
+"\'a1hola mundo!"; \
+\
+Vemos \'93Hola mundo\'94 otra vez en la consola\'85 \'bfpor qu\'e9?\
+\
+
+\b Explicaci\'f3n
+\b0 \
+\
+La primera l\'ednea nos da un error porque no es un patr\'f3n reconocible en el lenguaje, esto quiere decir que nuestra instrucci\'f3n esta incompleta o tiene elementos no existentes. El error en concreto, es que para que una palabra o combinaci\'f3n de palabras sea v\'e1lida en SuperCollider, tiene que ir dentro de \'93 \'93, que le dicen al lenguaje esta es una String, o colecci\'f3n de caracteres.\
+\
+La segunda l\'ednea es en efecto un patr\'f3n v\'e1lido, porque cumple con la definici\'f3n de una String. \
+\
+Todo en SuperCollider es un objeto y un objeto siempre nos devuelve a s\'ed mismo. Esto quiere decir que al ejecutar "hola mundo" estamos evaluando el objeto y como resultado nuestra consola nos muestra la String "hola mundo"\
+\
+Vemos otro elemento en nuestro programa.\
+\
+
+\b Cambio de c\'e1mara (c\'f3digo)
+\b0 \
+\
+ Cuando queremos que un objeto haga algo, usamos un punto y la instrucci\'f3n deseada. La terminolog\'eda adecuada para esto es que estamos invocando un m\'e9todo del objeto. Por tanto la expresi\'f3n \
+\
+"\'a1hola mundo!".postln;\
+\
+Imprime en la consola, porque post\'edn es un m\'e9todo v\'e1lido de la clase String, a la que nuestro objeto pertenece. \
+\
+Probemos con otra expresi\'f3n:\
+\
+\'93\'a1hola mundo!\'94.class;\
+\
+Imprime String en la consola, porque le estamos pidiendo al object que ejecute el m\'e9todo class. Incidentalmente, todos los objetos en SuperCollider tienen un m\'e9todo class:\
+\
+1.class;\
+1.0.class;\
+\
+\'bfSuena todo esto muy confuso? Pues claro que si, lo estamos aprendiendo. Poco a poco todo tenga m\'e1s sentido.\
+\
+Finalmente revisemos otras combinaciones de teclas que nos ser\'e1n necesarias al trabajar en SuperCollider.\
+\
+Para borrar la consola usamos cmd + shift + p\
+\
+y para acceder a ayuda usamos cmd + d\
+\
+Lo mismo aplica en Windows, en donde cmd equivale a ctrl\
+\
+La ayuda es una fuente invaluable de la que extraer informaci\'f3n. M\'e1s adelante exploraremos los documentos de ayuda en m\'e1s detalle.\
+\
+\
+}

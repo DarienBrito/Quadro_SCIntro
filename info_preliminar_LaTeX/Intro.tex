@@ -1,0 +1,71 @@
+\documentclass[12pt, letterpaper]{report}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc} 
+\usepackage[spanish]{babel}
+\usepackage{color}
+\usepackage{verbatim} 
+\usepackage{longtable} 
+\usepackage{graphicx}
+\usepackage{listings} % insertar código
+\usepackage{url} % hyperlinks
+\usepackage{hyperref} % navegación en PDF
+
+%-------------------------------
+% Path de imagenes
+%-------------------------------
+
+\graphicspath{ {imgs/} }
+
+%-------------------------------
+% Formato para código
+%-------------------------------
+
+\definecolor{codegreen}{rgb}{0,0.6,0}
+\definecolor{codesoftgreen}{rgb}{0,0.5,0}
+\definecolor{codeblue}{rgb}{0.,0.,0.6}
+\definecolor{codered}{rgb}{0.9,0,0.2}
+\definecolor{backcolour}{rgb}{0.95,0.95,0.92}
+
+\lstset{language=c}
+\lstset{ %
+  basicstyle=\footnotesize,        % tamaño de fuente
+  breakatwhitespace=false,         
+  breaklines=true,                 
+  captionpos=b,                    
+  keywordstyle=\color{codeblue},
+  stringstyle=\color{codesoftgreen},
+  commentstyle=\color{codegreen},
+  numberstyle=\color{codered},
+  morecomment=[l][\color{magenta}]{\#},
+  frame=single,                    % borde
+  keepspaces=true,                 
+  language=c,                 % lenguaje
+}
+
+%-------------------------------
+% Documento
+%-------------------------------
+
+\title{Información preliminar a \\ SuperCollider: curso introductorio}
+\author{Darien Brito}
+
+\begin{document}
+
+\begin{titlepage}
+\maketitle
+\end{titlepage}
+
+\begin{abstract}
+Este artículo sirve de preámbulo a conceptos claves para entender con facilidad los vídeos del curso. Si no tienes ninguna experiencia previa con programación, asegúrate de leer la información en este documento antes de empezar el tutorial.
+\end{abstract}
+
+\tableofcontents{}
+\listoffigures
+\pagestyle{plain}
+
+\include{c1}
+\include{c2}
+\include{c3}
+
+\end{document}
+

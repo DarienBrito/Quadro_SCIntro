@@ -1,0 +1,143 @@
+{\rtf1\ansi\ansicpg1252\cocoartf1404\cocoasubrtf470
+{\fonttbl\f0\fswiss\fcharset0 Helvetica;}
+{\colortbl;\red255\green255\blue255;}
+\paperw11900\paperh16840\margl1440\margr1440\vieww10780\viewh8400\viewkind0
+\pard\tx566\tx1133\tx1700\tx2267\tx2834\tx3401\tx3968\tx4535\tx5102\tx5669\tx6236\tx6803\pardirnatural\partightenfactor0
+
+\f0\b\fs24 \cf0 Frontal
+\b0 \
+\
+Hasta ahora hemos visto aspectos de programaci\'f3n, \'a1pero lo que nos interesa realmente es hacer sonidos!\
+\
+Antes de empezar, vamos a mirar funciones en un plano cartesiano a fin de entender la terminolog\'eda que vamos a usar al crear sonidos. \
+\
+
+\b Grapher\
+\
+\pard\tx566\tx1133\tx1700\tx2267\tx2834\tx3401\tx3968\tx4535\tx5102\tx5669\tx6236\tx6803\pardirnatural\partightenfactor0
+
+\b0 \cf0 Observemos la funci\'f3n seno de x, que genera una onda sinusoide. El axis Y en este plano representa la amplitud de la onda, mientras que el axis X representa el tiempo. \
+\
+La amplitud determina el rango total de la onda. Esta onda sinusoide tiene una amplitud de 1. Su rango es bipolar, por lo que oscila entre -1 y +1. Si su amplitud fuera 2, entonces su rango oscila entre -2 y 2. La amplitud es por tanto un multiplicador.\
+\
+Creemos una variable llamada a, por amplitud.\
+\
+Otro aspecto importante en nuestra onda, es la frecuencia. Esta determina cuantas oscilaciones por segundo nuestra onda tiene. Si incrementamos la frecuencia, vemos que la onda se mueve m\'e1s r\'e1pidamente en el rango determinado por su amplitud. \
+\
+Creemos una variable llamada \'83, por frecuencia.\
+\
+Un tercer elemento importante en nuestra onda, es la fase. La fase determina el punto en el que nuestra onda inicia. Si observamos nuestra onda sinusoide, vemos que su punto de inicio es 0. Si cambiamos su fase, podemos cambiar el punto inicial de la onda.\
+\
+Creemos una variable llamada fi, por fase\
+\
+Como podemos ver en esta animaci\'f3n, modular la fase resulta en un cambio del punto de partida de la onda.\
+\
+Por \'faltimo, podemos a\'f1adir un valor de compensaci\'f3n para el rango en el que la onda oscila. Como hab\'edamos establecido, esta onda oscila entre -1 y 1, cuando tiene una amplitud de 1.\
+\
+Creemos una variable llamada c, por compensaci\'f3n.\
+\
+ mira lo que ocurre si compensamos la onda con un valor de 1\'85\
+\
+Vemos que la onda ahora se mueve en el rango 0 a 2\
+\
+Volvamos a la posici\'f3n original\'85 c\'f3mo har\'edamos para que la onda oscile en el rango de 0 a 1? \
+\
+Para resolver este problema tienes que tener en cuenta que la onda es siempre bipolar y que puedes usar el valor de compensaci\'f3n para mover el rango en el que oscila. Por tanto, si nuestro multiplicador de amplitud es  0.5, la onda va de -0.5 a 0.5, y si luego compensamos este rango con 0.5, entonces las onda va de 0 a 1!\
+\
+Repite esta parte del v\'eddeo si no te ha quedado claro, pues es muy importante que comprendas esto a fondo. \
+\
+Vamos ahora a generar una onda sinusoide en SuperCollider.\
+\
+\pard\tx566\tx1133\tx1700\tx2267\tx2834\tx3401\tx3968\tx4535\tx5102\tx5669\tx6236\tx6803\pardirnatural\partightenfactor0
+
+\b \cf0 C\'f3digo
+\b0 \
+\
+Para generar sonido con SuperCollider, antes que nada tenemos que iniciar el servidor. Para hacerlo podemos:\
+\
+// Presionar cmd + b\
+Server.default.boot; // o evaluar esta l\'ednea.\
+s.boot; // o evaluar esta otra l\'ednea ("s" es un atajo para Server.default)\
+\
+Por regla general, es mejor no usar nunca la variable global "s", pues de otro modo, pierde su asignaci\'f3n autom\'e1tica para Server.default\
+\
+\
+// Una vez el servidor es inicializado, tratemos de escribir la siguiente funci\'f3n:\
+\{ SinOsc.ar(320, 0, 1, 0) \}.play;\
+\
+Esta onda sinusoide oscila 320 veces por segundo, o tiene una frecuencia de 320hz. La frecuencia determina el tono de un sonido. A mas frecuencia, el tono es m\'e1s agudo, e menor frecuencia, m\'e1s grave.\
+\
+Para apagar el sonido presionamos\
+// cmd + .\
+\
+Ya has aprendido los elementos que tiene un oscilador, podemos ver los mismos elementos en nuestra sinusoide:\
+\
+\{ SinOsc.ar(freq: 320, phase: 0, mul: 1, add: 0) \}.play;\
+\
+freq = frecuencia\
+phase = fase\
+mul = multiplicador de amplitud\
+add = compensaci\'f3n\
+\
+Por defecto, la fase es 0, mul es 1 y offset es 0. En SuperCollider, es posible omitir argumentos que est\'e1n definidos por defecto o usar argumentos espec\'edficos:\
+\
+\{ SinOsc.ar(320) \}.play;\
+\{ SinOsc.ar(320, mul: 0.5) \}.play;\
+\
+Vemos algo m\'e1s en nuestro c\'f3digo. Qu\'e9 significa .ar ?\
+\
+Esto se refiere al rango de velocidad del oscilador. Si es algo que queremos escuchar, tiene que ser ar, si es en cambio un oscilador que vamos a usar para controlar algo m\'e1s, entonces es kr\
+\
+ar (audio rate) velocidad de audio\
+kr (control rate) velocidad de control\
+\
+En general, el o\'eddo humano es capaz de distinguir frecuencias en el rango 20 a 20000hz. El rango .ar se usa  para ondas audibles en estas frecuencias. Un oscilador .ar en realidad puede producir oscilaciones desde 0 hasta la frecuencia Nyqvist, que depende de la velocidad de muestreo del conversor digital. Esto va m\'e1s all\'e1 de lo que nos interesa en este tutorial y no lo explicar\'e9 en este momento.\
+\
+Un oscilador .kr esta limitado a rangos de control, es decir desde 0, hasta el l\'edmite de 120hz. Osciladores de control, o de oscilaci\'f3n lenta, se conocen como LFO, o \'93Low Frequency Oscillator\'94\
+\
+Esta distinci\'f3n tendr\'e1 sentido en nuestro pr\'f3ximo cap\'edtulo, que trata sobre modulaciones.\
+\
+// Volvamos a los argumentos que soporta nuestro oscilador:\
+\{ SinOsc.ar(freq: 320, phase: 0, mul: 1, add: 0) \}.play;\
+\
+Si y solo si, la onda ser\'e1 audible, \'94mul" tiene que ser m\'e1ximo 1, de otro modo la se\'f1al se distorsiona. Si no es audible, entonces puede tener cualquier valor.\
+\
+// Usando solamente los par\'e1metros freq y mul\
+\{ SinOsc.ar(freq: 320, mul: 1) \}.play;\
+// mul es literalmente "multiplicador", por tanto la l\'ednea previa equivale a:\
+\{ SinOsc.ar(freq: 320) * 1.0 \}.play;\
+// dado que estamos escalando la amplitud total de la onda.\
+\
+// Otros osciladores:\
+Saw\
+Pulse\
+VarSaw\
+WhiteNoise\
+PinkNoise\
+GrayNoise\
+\
+// Puedes experimentar por tu cuenta con estos osciladores? \'a1Si usas aud\'edfonos ten cuidado con el volumen!\
+\
+\
+\
+\
+\
+\
+\
+\
+\
+\
+\
+\
+\
+\
+\
+\
+\
+\
+\
+\
+\
+\
+\
+}

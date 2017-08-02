@@ -1,0 +1,131 @@
+{\rtf1\ansi\ansicpg1252\cocoartf1404\cocoasubrtf470
+{\fonttbl\f0\fswiss\fcharset0 Helvetica;}
+{\colortbl;\red255\green255\blue255;}
+\paperw11900\paperh16840\margl1440\margr1440\vieww10800\viewh8400\viewkind0
+\pard\tx566\tx1133\tx1700\tx2267\tx2834\tx3401\tx3968\tx4535\tx5102\tx5669\tx6236\tx6803\pardirnatural\partightenfactor0
+
+\f0\b\fs72 \cf0 Frontales\
+\
+0. Bienvenida\
+\
+
+\b0 Bienvenidos al curso introductor al lenguaje de programaci\'f3n SuperCollider. En este curso vamos a aprender principios de programaci\'f3n y t\'e9cnicas de s\'edntesis de sonido. El material est\'e1 orientado a todos aquellos interesados en crear sonido digital y ofrece una alternativa en espa\'f1ol a los tutoriales existentes sobre esta plataforma. \
+\
+Iniciaremos con una descripci\'f3n pr\'e1ctica de los elementos b\'e1sicos para escribir algoritmos y nos enfocaremos en sentar las bases para un aprendizaje autodidacta. Todo el material del curso es gratuito y est\'e1 disponible para descarga en un repositorio en Github.\
+\
+Al finalizar el curso, espero tengas conocimiento suficiente para experimentar y te sientas motivado para utilizar el c\'f3digo como un m\'e9todo creativo.\
+\
+Empecemos por explicar qu\'e9 es SuperCollider y como instalarlo.\
+
+\b \
+1.Hola mundo
+\b0 \
+\
+La primera l\'ednea nos da un error porque no es un patr\'f3n reconocible en el lenguaje, esto quiere decir que nuestra instrucci\'f3n esta incompleta o tiene elementos no existentes. El error en concreto, es que para que una palabra o combinaci\'f3n de palabras sea v\'e1lida en SuperCollider, tiene que ir dentro de comillas, que le dicen al lenguaje esta es una String, o colecci\'f3n de caracteres.\
+\
+La segunda l\'ednea es en efecto un patr\'f3n v\'e1lido, porque cumple con la definici\'f3n de una String. \
+\
+Todo en SuperCollider es un objeto y un objeto siempre nos devuelve a s\'ed mismo. Esto quiere decir que al ejecutar "hola mundo" estamos evaluando el objeto y como resultado nuestra consola nos muestra la String "hola mundo\'94, aunque en realidad no estemos ejecutando el m\'e9todo post\'edn, que imprime en la consola. Esta es una distinci\'f3n importante que tener el mente. \
+\
+Vemos otro elemento en nuestro programa.\
+\
+
+\b 3.Arrays
+\b0 \
+\
+1)\
+\
+Existen varias formas en las que podemos crear un array. SuperCollider es un lenguaje muy vers\'e1til y conciso, usado para hacer m\'fasica en tiempo real. Abreviar instrucciones es altamente deseable en este contexto.\
+\
+Aqu\'ed algunas formas de crear un array cuyos miembros son los n\'fameros de 0 al 9. No es necesario que entiendas de momento como todo esto funciona, lo importante es saber que\
+existen varias formas de hacer lo mismo en todo lenguaje de programaci\'f3n.\
+\
+\
+
+\b 4.Funciones\
+\
+
+\b0 1) Hemos aprendido hasta ahora los bloques b\'e1sicos para comenzar a programar sonidos. Nos falta sin embargo entender c\'f3mo crear series de instrucciones cuya funcionalidad podamos re-utilizar. En este cap\'edtulo aprenderemos a crear funciones y trataremos de entender c\'f3mo modelarlas de forma que sean re-utilizables.\
+\
+2) Argumentos son como compuertas mediante las cuales pasamos valores que son usados dentro de una funci\'f3n. \
+\
+Imaginemos que estamos en una f\'e1brica en donde una m\'e1quina pone estampas a cualquier objeto que pasa por una compuerta. Digamos que la compuerta en uso solo pasa cartas. La m\'e1quina por tanto estampa siempre una carta. Ahora, digamos que la f\'e1brica quiere expandir sus capacidades pero no quiere gastar dinero. En lugar de comprar otra m\'e1quina de estampas, decide en cambio crear una compuerta por la que pasan libros. Ahora la m\'e1quina es capaz de estampar den una carta o un libro, a pesar de que es la misma m\'e1quina.    \
+\
+De forma similar, los argumentos para funciones, funcionan como compuertas mediante las cuales podemos pasar objetos distintos.\
+\
+
+\b 5. Loops\
+\
+
+\b0 Estamos muy cerca de tener conocimiento suficiente para programar sonidos. El \'faltimo concepto que quiero explicar antes de comenzar a programar procesos de s\'edntesis, es el de \'93loops\'94\
+\
+Las computadoras actuales son excepcionales en el hecho de que pueden realizar tareas repetitivas sin errores y sin l\'edmite, aparte de la capacidad de memoria m\'e1xima o de la entrop\'eda que experimentan. Para aprovecharnos de esta capacidad, podemos usar bucles de ejecuci\'f3n o "loops".\
+\
+Un loop es en esencia una acci\'f3n que se realiza repetitivamente hasta que una condici\'f3n deja de cumplirse.\
+\
+Por ejemplo, 4 personas llegan a un restaurante y le piden al mesero que les llene sus respectivos vasos con agua. El mesero tiene que repetir esta acci\'f3n 4 veces. Si el mesero trata de continuar la acci\'f3n y no hay vasos suficientes, el agua se derrama en la mesa y los clientes pensar\'e1n que el mesero es muy incompetente. \
+\
+\
+\
+\
+\
+Otro ejemplo: enumera todos los n\'fameros pares menores a 20. Para conseguirlo, tendr\'e1s que iterar a trav\'e9s de los n\'fameros pares uno por uno hasta llegar al l\'edmite, que es 18. \
+\
+Los loops en computadoras funcionan de igual forma solo que, como entidades carentes de juicio o cansancio, son capaces de continuar indefinidamente a menos que definamos la condici\'f3n expl\'edcitamente. Por esto debemos tener cierto cuidado en no crear loops infinitos. \
+\
+Esta es una noci\'f3n importante en programaci\'f3n.\
+\
+Si te digo: \'93dime todos los n\'fameros pares\'94 y eres el tipo de persona que le gustan los retos, empezaras a recitarlos uno por uno. Si eres persistente y no tienes nada mejor que hacer, posiblemente llegaras a cientos o miles pero eventualmente entender\'e1s que la tarea es f\'fatil y nunca vas a conseguir decirme todos los n\'fameros pares. Las computadoras no poseen esta capacidad de juicio y van a tratar de continuar hasta el punto en el que agotan su memoria y llegan a colapsar.\
+\
+Escribamos nuestro primer loop.\
+\
+
+\b 6. Osciladores\
+
+\b0 \
+Hasta ahora hemos visto aspectos de programaci\'f3n, \'a1pero lo que nos interesa realmente es hacer sonidos!\
+\
+Antes de empezar, vamos a mirar funciones en un plano cartesiano a fin de entender la terminolog\'eda que vamos a usar al crear sonidos. \
+\
+
+\b 7. Modulaci\'f3n\
+\
+\pard\tx566\tx1133\tx1700\tx2267\tx2834\tx3401\tx3968\tx4535\tx4976\tx5102\tx5669\tx6236\tx6803\pardirnatural\partightenfactor0
+
+\b0 \cf0 Pese a que hay mucho que profundizar sobre modulaci\'f3n va mas all\'e1 de este tutorial explicar t\'e9cnicas avanzadas. Por ahora nos enfocaremos en continuar entendiendo las funcionalidades b\'e1sicas del lenguaje. Uno de los conceptos que tenemos que cubrir, es el de se\'f1ales multi-canales, que en SC se conoce como \'93Multichannel Expansion\'94\
+\pard\tx566\tx1133\tx1700\tx2267\tx2834\tx3401\tx3968\tx4535\tx5102\tx5669\tx6236\tx6803\pardirnatural\partightenfactor0
+\cf0 \
+Veremos que es sumamente sencillo producir se\'f1ales stereo, cuadraf\'f3nicas, octof\'f3nicas y dem\'e1s. Lo \'fanico que tenemos que hacer es pasar un array de frecuencias o amplitudes a un generador y autom\'e1ticamente el servidor asignar\'e1 canales sucesivos a la se\'f1al\
+\
+Veamos algunos ejemplos\
+\
+
+\b 8. S\'edntesis Aditiva\
+  \
+
+\b0 Tengamos en claro que:\
+\
+- Toda funci\'f3n que produce un sonido, es evaluada en el Servidor. El servidor es un programa adicional que corre tras bastidores y que se encarga de computar todos los sonidos que creamos\
+\
+- UGens (unit generators), son todas las clases que en SuperCollider generan valores.\
+\
+Estas son por ejemplo todos los osciladores\
+\
+De ahora en adelante cuando diga UGens, piensa en todas las clases que producen n\'fameros en el Servidor. \
+
+\b \
+10. Envelopes\
+\
+
+\b0 Cuando queremos moldear sonidos, necesitamos alguna forma de control para par\'e1metros establecidos. Para este prop\'f3sito, usamos "envelopes" o envolventes, que son curvas de control definidas con secuencias de arrays.\
+\
+El generador para envolventes en SuperCollider es "EnvGen", mientras que el envolvente en s\'ed es "Env". De ahora en adelante me referir\'e9 a envolventes la palabra en ingl\'e9s "envelopes", pues el nombre en castellano es my inusual.\
+\
+Cuando creamos un envelope a ser usado en una se\'f1al, necesitamos definir una serie de:\
+- valores (los puntos por donde vamos a pasar)\
+- tiempo (el tiempo en el que atravesar dichos puntos)\
+- curvas (el tipo de interpolaci\'f3n a usar)\
+\
+Como hab\'eda mencionado en un v\'eddeo anterior, interpolar significa llenar los valores que existen entre dos puntos.\
+\
+}

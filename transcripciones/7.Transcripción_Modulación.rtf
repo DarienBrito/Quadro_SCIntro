@@ -1,0 +1,323 @@
+{\rtf1\ansi\ansicpg1252\cocoartf1404\cocoasubrtf470
+{\fonttbl\f0\fswiss\fcharset0 Helvetica;}
+{\colortbl;\red255\green255\blue255;}
+\paperw11900\paperh16840\margl1440\margr1440\vieww13060\viewh14500\viewkind0
+\pard\tx566\tx1133\tx1700\tx2267\tx2834\tx3401\tx3968\tx4535\tx5102\tx5669\tx6236\tx6803\pardirnatural\partightenfactor0
+
+\f0\fs24 \cf0 \
+\
+Aprendimos a generar sonido con osciladores. \'bfQu\'e9 quiere decir "modula?\
+\
+Modular simplemente quiere decir alterar un par\'e1metro espec\'edfico con alg\'fan valor o serie de valores continuo.\
+\
+El m\'e9todo m\'e1s b\'e1sico de modulaci\'f3n se denomina "modulaci\'f3n de amplitud" o "amplitude modulation (AM)" en ingl\'e9s.  Esto consiste en controlar la amplitud de un oscilador con otro oscilador:\
+\
+\{ SinOsc.ar(440, mul: SinOsc.kr(2, mul: 0.5, add: 0.5)) \}.play;\
+\
+Observa que:\
+\
+1. Nuestro primer oscilador es audible (ar), nuestro segundo oscilador controla la frecuencia del primero (kr)\
+ar -> audio rate (rango audible)\
+kr -> control rate (rango de control)\
+\
+Esta distinci\'f3n es significativa en el c\'f3digo fuente de SuperCollider, en donde cada m\'e9todo esta optimizado para su tarea respectiva.\
+\
+2. El oscilador kr tiene una frecuencia de 2, lo que quiere decir que oscila 2 veces por segundo.\
+\
+3. La amplitud de todo oscilador por defecto va de -1.0 a 1.0. Esto implica que para controlar la amplitud del primer oscilador de modo que vaya de 0 a 1, tenemos que escalar y compensar nuestro oscilador kr.\
+\
+Si esto no es  claro, vuelve al cap\'edtulo anterior, donde explico con detalle lo que implica la amplitud. Tambi\'e9n lo podemos entender de la siguiente manera:\
+\
+\
+Aahora hemos escalado y compensado la se\'f1al al rango deseado:\
+\{ SinOsc.ar(440, mul: SinOsc.kr(2, mul: 0.5, add: 0.5)) \}.play;\
+\
+Otra forma, quiz\'e1s m\'e1s intuitiva de hacer lo mismo es usar el m\'e9todo "range"\
+\{ SinOsc.ar(440, mul: SinOsc.kr(2).range(0, 1)) \}.play; // Expl\'edcitamente de 0 a 1\
+\
+\
+Con amplitud modulada, podemos generar nuevos timbres de forma muy econ\'f3mica mediante multiplicaci\'f3n de una se\'f1al por otra con alta frequencia. Hasta ahora hemos usado frecuencias de modulaci\'f3n relativamente bajas. A  esta operaci\'f3n se le suele llamar "ring modulation" debido a que en los equipos de s\'edntesis anal\'f3gica el circuito para producir esta operaci\'f3n ten\'eda una forma de anillo. En s\'edntesis digital el nombre es insubstancial pero ha perdurado para definir este tipo de modulaci\'f3n.\
+\
+ // "ring modulation" con 2 ondas sinusoides\
+\{ SinOsc.ar(440, mul: SinOsc.ar(120)) * 0.25 \}.play;\
+\
+ // otra forma de escribir lo mismo\
+\{ (SinOsc.ar(440) * SinOsc.ar(120)) * 0.25 \}.play;\
+\
+// Usando otras ondas:\
+\{ SinOsc.ar(120) * Pulse.ar(520, 0.5) * 0.25 \}.play;\
+\{ SinOsc.ar(1000) * Saw.ar(100) * 0.25 \}.play;\
+\
+// Las bandas sonoras que se forman con esta operaci\'f3n equivalen a (x + y) y (x - y). Por ejemplo, con frequencias 440 y 120, como en nuestro ejemplo inicial, las bandas resultantes son:\
+440 - 120; // 320hz\
+440 + 120; // 560hz\
+\
+Pensemos ahora en lo siguiente: queremos controlar la frecuencia de un oscilador con otro oscilador. A esto se le llama frecuencia modulada o FM \'93frequency modulation\'94 en ingl\'e9s.\
+\
+\{ SinOsc.ar(320 + SinOsc.kr(0.5, mul: 10.0)) \}.play\
+\
+Antes de explicar lo que est\'e1 sucediendo, escuchemos el resultado.\
+\
+Lo que ocurre es que tenemos una frecuencia central de 320hz a la que le estamos a\'f1adiendo el resultado de una segunda onda. La segunda onda (o modulador) tiene una frecuencia de 20 y una amplitud de 10, por lo que oscila entre -10 y 10 veinte veces por segundo. Nuestra operaci\'f3n de suma hace que en sus picos, la frecuencia resultante es:\
+\
+320 + 10 = 330\
+320 - 10 =  310\
+\
+\pard\tx566\tx1133\tx1700\tx2267\tx2834\tx3401\tx3968\tx4535\tx4976\tx5102\tx5669\tx6236\tx6803\pardirnatural\partightenfactor0
+\cf0 \
+
+\b Frontal
+\b0 \
+\pard\tx566\tx1133\tx1700\tx2267\tx2834\tx3401\tx3968\tx4535\tx5102\tx5669\tx6236\tx6803\pardirnatural\partightenfactor0
+\cf0 \
+\
+\pard\tx566\tx1133\tx1700\tx2267\tx2834\tx3401\tx3968\tx4535\tx4976\tx5102\tx5669\tx6236\tx6803\pardirnatural\partightenfactor0
+\cf0 Pese a que hay mucho que profundizar sobre modulaci\'f3n va mas all\'e1 de este tutorial explicar t\'e9cnicas avanzadas. Por ahora nos enfocaremos en continuar entendiendo las funcionalidades b\'e1sicas del lenguaje. Uno de los conceptos que tenemos que cubrir, es el de se\'f1ales multi-canales, que en SC se conoce como \'93Multichannel Expansion\'94\
+\pard\tx566\tx1133\tx1700\tx2267\tx2834\tx3401\tx3968\tx4535\tx5102\tx5669\tx6236\tx6803\pardirnatural\partightenfactor0
+\cf0 \
+Veremos que es sumamente sencillo producir se\'f1ales stereo, cuadraf\'f3nicas, octof\'f3nicas y dem\'e1s. Lo \'fanico que tenemos que hacer es pasar un array de frecuencias o amplitudes a un generador y autom\'e1ticamente el servidor asignar\'e1 canales sucesivos a la se\'f1al\
+\
+\
+Veamos algunos ejemplos\
+\
+\pard\tx566\tx1133\tx1700\tx2267\tx2834\tx3401\tx3968\tx4535\tx5102\tx5669\tx6236\tx6803\pardirnatural\partightenfactor0
+
+\b \cf0 Coding\
+\
+\pard\tx566\tx1133\tx1700\tx2267\tx2834\tx3401\tx3968\tx4535\tx5102\tx5669\tx6236\tx6803\pardirnatural\partightenfactor0
+
+\b0 \cf0 Antes de nada, configuremos el Servidor de forma que soporte 8 canales. Si tenemos el servidor activo, primero tenemos que apagarlo, con s.quit. Asignamos los canales, usando la l\'ednea s.options.numOutputBusChannels = 8 y re-iniciamos el servidor\
+\
+Ahora invoquemos al mezclador de SuperCollider, con cmd + m\
+\
+// Canales 0 y 1 (stereo)\
+\{ PinkNoise.ar([0.1, 0.1]) * 0.1 \}.play;\
+\
+// Canales 0, 1, 2, 3 (cuadraf\'f3nico)\
+\{ PinkNoise.ar([0.1, 0.1, 0.1, 0.1]) * 0.1 \}.play;\
+\
+// Canales 0 y 1 (stereo), canal 1 con menor amplitud\
+\{ SinOsc.ar([440, 441], 0, [0.15, 0.01]) * 0.1 \}.play;\
+\
+// Canales 0 y 1 (stereo), con misma amplitud, y desviaci\'f3n de 1 hz en frecuencia\
+\{ SinOsc.ar([440, 441], 0, 0.1) * 0.1 \}.play;\
+\
+// Canales 0 y 1 (stereo), canal 1 modulado\
+\{ SinOsc.ar([440, 440 + SinOsc.ar(2, 0, 10)], 0, 0.1) * 0.1\}.play;\
+\
+Que pasa si queremos sobre-escribir el order por de efecto de los buses y especificar desde d\'f3nde queremos que SuperCollider inicie la cuenta de nuestros buses de salida?\
+En ese caso, tenemos que usar la clase Out.ar() que toma en su primer argumento el bus desde el cual empezar la cuenta del array, y la se\'f1al que queremos escuchar.\
+\
+\
+/*\
+Otro m\'e9todo de generar se\'f1ales multicanal, es creando copias de la se\'f1al.\
+Esto puede ser conseguido mediante el uso del operador "!", que crea un array\
+*/\
+\
+1 ! 2; // crear un array que contiene dos 1\
+"hola" ! 10; // un array con 10 "hola"\
+\{SinOsc.ar(440) ! 2\}.play; // Una onda sinusoide en 2 canales\
+\
+\
+\
+\
+\
+\
+\
+\
+\
+\
+\
+\
+\
+\
+\
+\
+LO SIGUIENTE NO VA EN EL V\'cdDEO!!! \'97\'97\'97>\
+\
+\
+Veamos ahora 2 tipos m\'e1s de generadores:\
+\
+Line.kr(start: valor de inicio, end: valor de llegada, dur: duracion, mul: amplitud, add: compensaci\'f3n, doneAction: qu\'e9 hacer cuando arribamos al valor de llegada)\
+\
+XLine.kr(lo mismo pero de forma exponencial)\
+\
+Modular la frequencia de una onda sinusoide linearmente, desde 2000hz a 100hz\
+\{ SinOsc.ar(Line.kr(start: 2000, end: 100, dur: 5, mul: 1, add: 0, doneAction: 2)) \}.play\
+\
+// Modular la frequencia de una onda sinusoide exponencialmente, desde 2000hz a 100hz\
+\{ SinOsc.ar(XLine.kr(start: 2000, end: 100, dur: 5, mul: 1, add: 0, doneAction: 2)) \}.play\
+\
+// Gr\'e1ficos de lo que occurre con la frequencia\
+Env([2000, 100],[5],\\lin).plot(name:\\linear);\
+\
+Env([2000, 100],[5],\\exp).plot(name:\\exponencial);\
+\
+// doneAction es importante en este caso porque termina el proceso una vez se cumple la instrucci\'f3n. Cuando programamos audio, es importante tener cuidado con limpiar la memoria de lo que no necesitamos. El uso de memoria se puede ver en la parte inferior derecha, con los valores porcentuales. Veremos esto con m\'e1s profundidad en el cap\'edtulo 10.\
+\
+\
+// No es necesario escribir lo que los par\'e1metros son, podemos hacer lo mismo sin nombres pasamos los par\'e1metros en el orden adecuado:\
+\{ SinOsc.ar(Line.kr(2000, 100, 5, 1, 0, 2)) \}.play\
+\
+// Si queremos saltar par\'e1metros y dejar los que saltamos en sus valores por defecto, entonces si que necesitamos especificar el par\'e1metro en cuesti\'f3n\
+\{ SinOsc.ar(Line.kr(2000, 100, 5, doneAction: 2)) \}.play\
+\
+// Si presionamos la tecla TAB en el espacio para par\'e1metros, podemos autom\'e1ticamente obtener los nombres de los par\'e1metros.\
+Line.kr()\
+\
+\
+\
+\
+\
+\
+/*\
+Ejemplo de modulaci\'f3n usando "Sample and Hold"\
+\
+Es importante tener siempre en mente que cuando tratamos con computadores, estamos siempre en realidad lidiando con n\'fameros.\
+\
+Vamos a utilizar n\'fameros al azar para generar frequencias que puedan ser audibles. Antes que nada, sin embargo, entendamos un poco lo que son n\'fameros al azar...\
+*/\
+\
+1.0.rand; // M\'e9todo para obtener n\'fameros al azar en el rango de 0.0 a 1.0\
+\
+rrand(1, 10); // M\'e9todo para obtener n\'fameros al azar en el rango de 1 a 10.0\
+\
+// El ruido blanco, no es sino la representaci\'f3n ideal audible de todas las frecuencias con amplitudes correspondientes a n\'fameros al azar en el rango de 0.0 a 1.0\
+\
+\{ WhiteNoise.ar(0.1) \}.play;\
+\
+// Sabiendo esto, podemos generar frequencias con ruido blanco para una onda sinusoide:\
+\{ SinOsc.ar(Latch.kr(WhiteNoise.kr(1), Impulse.kr(10)) * 200 + 200 )\}.play\
+\
+// Hemos utilizado en este caso dos nuevos UGens: Latch e Impulse\
+\
+Latch.kr(in: fuente que samplear ,trig: se\'f1al que determina cu\'e1ndo samplear);\
+Impulse.kr(freq: 10); // Un oscilador que genera impulsos\
+\
+\
+\
+\
+\
+\
+\
+\
+\
+\
+\
+\
+\
+\
+\
+\
+\
+\
+\
+\
+\
+\
+\
+\
+\
+\
+// Para enteder todo esto un poco mejor, utilicemos un osciloscopio:\
+\
+\{ SinOsc.kr(30) \}.scope;\
+\{ Saw.kr(30) \}.scope;\
+\{ VarSaw.kr(30) \}.scope;\
+\{ Impulse.kr(30) \}.scope;\
+\{ WhiteNoise.kr(1) \}.scope;\
+\
+// Podemos de esta manera observar las formas que cada onda tiene\
+\
+\
+\
+\
+\
+\
+\
+\
+\
+\
+\
+\
+\
+\
+\
+\
+\
+\
+\
+\
+\
+\
+\
+\
+\
+/*\
+\
+Ejemplo de modulaci\'f3n de fase\
+\
+Esta t\'e9cnica es una forma simple de obtener un resultado equivalente a FM (frequency modulation)\
+o "frecuencia modulada". Mediante esta t\'e9cnica es posible obtner una gran variedad t\'edmbrica mediante simplemente modulando la fase de una onda.\
+\
+*/\
+\
+// Modulaci\'f3n de fase en un oscilador sinusoidal:\
+\{ SinOsc.ar(300, SinOsc.ar(200), 1) \}.play;\
+\
+// Modulaci\'f3n de fase usando rudio browniano\
+\{ SinOsc.ar(300, SinOsc.ar(BrownNoise.kr(1).range(100, 800)), 1) \}.play;\
+\
+/*\
+El ruido browniano (llamado tambi\'e9n ruido borracho), es un algoritmo que produce n\'fameros al azar que est\'e1n cerca uno del otro en base a un intervalo o "step".\
+\
+El rudio blanco en cambio, es un algoritmo en el que todos los valores tienen la misma probabilidad de occurir.\
+\
+Las siguientes l\'ednea son solamente para ilustraci\'f3n. No es necesario comprenderlas.\
+*/\
+\
+// ruido browniano\
+Pbrown(0, 1, step: 0.125).asStream.nextN(100).plot(name: \\rudioBrowniano);\
+// ruido blanco\
+Pwhite(0, 1).asStream.nextN(100).plot(name: \\ruidoBlanco);\
+\
+// \'bfPuedes apreciar la diferencia?\
+\
+\
+\
+\
+\
+\
+\
+\
+\
+\
+\
+\
+\
+\
+\
+\
+\
+\
+\
+\
+\
+\
+\
+\
+\
+\
+\
+\
+\
+\
+\
+\
+\
+\
+\
+\
+\
+\
+}

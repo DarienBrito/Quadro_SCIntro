@@ -1,0 +1,171 @@
+{\rtf1\ansi\ansicpg1252\cocoartf1404\cocoasubrtf470
+{\fonttbl\f0\fswiss\fcharset0 Helvetica;}
+{\colortbl;\red255\green255\blue255;}
+\paperw11900\paperh16840\margl1440\margr1440\vieww10800\viewh8400\viewkind0
+\pard\tx566\tx1133\tx1700\tx2267\tx2834\tx3401\tx3968\tx4535\tx5102\tx5669\tx6236\tx6803\pardirnatural\partightenfactor0
+
+\f0\b\fs24 \cf0 Frontal
+\b0 \
+\
+Estamos muy cerca de tener conocimiento suficiente para programar sonidos. El \'faltimo concepto que quiero explicar antes de comenzar a programar procesos de s\'edntesis, es el de \'93loops\'94\
+\
+Las computadoras actuales son excepcionales en el hecho de que pueden realizar tareas repetitivas sin errores y sin l\'edmite, aparte de la capacidad de memoria m\'e1xima o de la entrop\'eda que experimentan. Para aprovecharnos de esta capacidad, podemos usar bucles de ejecuci\'f3n o "loops".\
+\
+Un loop es en esencia una acci\'f3n que se realiza repetitivamente hasta que una condici\'f3n deja de cumplirse.\
+\
+Por ejemplo, 4 personas llegan a un restaurante y le piden al mesero que les llene sus respectivos vasos con agua. El mesero tiene que repetir esta acci\'f3n 4 veces. Si el mesero trata de continuar la acci\'f3n y no hay vasos suficientes, el agua se derrama en la mesa y los clientes pensar\'e1n que el mesero es muy incompetente o est\'e1 loco.\
+\
+Otro ejemplo: dime todos los n\'fameros pares menores a 20. Tendr\'e1s que iterar a trav\'e9s de los n\'fameros pares uno por uno hasta llegar al l\'edmite, que es 18. \
+\
+Los loops en computadoras funcionan de igual forma solo que, como entidades carentes de juicio o cansancio, son capaces de continuar indefinidamente a menos que definamos la condici\'f3n expl\'edcitamente. Por esto debemos tener cierto cuidado en no crear loops infinitos. \
+\
+Esta es una noci\'f3n importante en programaci\'f3n.\
+\
+Si te digo: dime todos los n\'fameros pares y eres el tipo de persona que le gustan los retos, empezaras a recitarlos uno por uno. Si eres persistente y no tienes nada mejor que hacer, posiblemente llegaras a cientos o miles pero eventualmente entender\'e1s que la tarea es f\'fatil y nunca vas a conseguir decirme todos los n\'fameros pares. Las computadoras no poseen esta capacidad de juicio y van a tratar de continuar hasta el punto en el que agotan su memoria y llegan a colapsar.\
+\
+Veremos m\'e1s adelante un ejemplo de un loop que va a colapsar tu computadora, a modo ilustrativo. Por ahora, escribamos nuestro primer loop.\
+\
+
+\b C\'f3digo 
+\b0 \
+\
+En SuperCollider, existen varias formas de escribir loops, pero la mayor\'eda de construcciones han probado ser no tan idiom\'e1ticas:\
+\
+El \'93for loop\'94, que est\'e1 presente en pr\'e1cticamente todos los lenguajes de programaci\'f3n, no es muy usual en SuperCollider pero es un buen punto de partida para entender la l\'f3gica. Se escribe as\'ed:\
+\
+for(0, 9, \{ "hola".postln \});\
+\
+Esto se traduce como: empezando en 0  y terminando en 9, cuenta ascendentemente e imprime \'93hola\'94 en la consola cada vez. Esto quiere decir que imprimir\'e1 hola 10 veces. \
+\
+En una definici\'f3n m\'e1s formal, vemos que la estructura es:\
+\
+for(inicio, llegada, funci\'f3n);\
+\
+Ahora, el uso m\'e1s com\'fan de un loop, es utilizando el n\'famero de iteraci\'f3n actual. \'bfRecuerdas como los argumentos de las funciones son como compuertas? En loops, podemos crear una compuerta a trav\'e9s de la cual pasamos la cuenta de iteraci\'f3n actual:\
+\
+Observa el siguiente loop:\
+\
+for(0, 9, \{arg i; i.postln; \}); //imprime los n\'fameros de 0 al 9\
+\
+el argumento i autom\'e1ticamente pasa el numero de cuenta actual. Por tanto, cuando le pedimos imprima en la consola i, tenemos este resultado. El nombre de este argumento no es especial, puede ser cualquier cosa, pero tradicionalmente se le llama i, como abreviaci\'f3n de \'93iteraci\'f3n\'94. \
+\
+for(0, 9, \{arg i; i.postln; \}); //imprime los n\'fameros de 0 al 9\
+\
+La compuerta i que hemos creado, pasa autom\'e1ticamente la cuenta de iteraci\'f3n actual. \
+\
+Dije antes que existen varias formas de crear loops. Otra forma, a\'fan m\'e1s inusual en SuperCollider es usando un loop condicional, llamado \'93while loop\'94. Lo presento a modo ilustrativo pero no vamos a explicar a fondo como funciona por ahora.\
+\
+\
+// 2. While loop, un loop condicional, no muy idiom\'e1tico tampoco\
+(\
+var i = 0;\
+while(\{i < 10\}, \{i.postln; i = i + 1; \}); //imprime los n\'fameros de 0 al 9\
+)\
+\
+Finalmente, vamos a enfocarnos en la forma m\'e1s idiom\'e1tica de escribir loops en SuperCollider. Esta forma tiene adem\'e1s comportamientos especiales, porque es un m\'e9todo de la clase Collection, que es la super clase de Array, que ya hemos visto:\
+\
+10.do\{arg i; i.postln \}; //imprime los n\'fameros de 0 al 9\
+\
+\'bfSimple verdad? La estructura simplemente dice:\
+\
+numero de iteraciones -> ejecuta -> funci\'f3n\
+\
+Vemos que usamos la compuerta i como antes para pasar la cuenta\'85 sin embargo, y esto puede resultar un poco confuso, en este m\'e9todo el primer argumento no es la cuenta actual, sino el objeto actual\'85 \
+\
+10.do\{arg i; i.postln \}; \
+\
+tiene el mismo resultado que \
+[0,1,2,3,4,5,6,7,8,9].do\{arg i; i.postln;\
+\
+Es porque, con este m\'e9todo podemos iterar a trav\'e9s de miembros de una colecci\'f3n, como un array!\
+\
+El argumento i en este caso, representa el objeto. Si queremos adem\'e1s obtener la cuenta, podemos usar un segundo argumento. Este es un comportamiento especial, sin embargo, esta es la forma m\'e1s idiom\'e1tica de escribir loops en SuperCollider y es la forma que vamos a utilizar de ahora en adelante.\
+\
+Vamos a llamar al primer argumento obj (objeto)\
+(\
+var miArray = [1,29,13,24];\
+miArray.do\{|obj| obj \};\
+)\
+\
+Con un segundo argumento, podemos llevar ademas la cuenta del n\'famero de iteraci\'f3n en la que estamos.\
+\
+(\
+var miArray = [1,29,13,24];\
+miArray.do\{|obj, cuenta| \
+	obj.postln; \
+	cuenta.postln \
+\};\
+)\
+// El resultado es:\
+//-----------------------------------------\
+0 // cuenta 0\
+1 // el elemento en la posici\'f3n 0 del array\
+1 // cuenta 1\
+29 // el elemento en la posici\'f3n 1 del array\
+2 // cuenta 2\
+13 // el elemento en la posici\'f3n 2 del array\
+3 // cuenta 3\
+24 // el elemento en la posici\'f3n 3 del array\
+\
+Ten en cuenta que SIEMPRE en un loop de este tipo, el PRIMER Argumento REPRESENTA EL Objeto y el SEGUNDO ARGUMENTO REPRESENTA LA CUENTA. Ambos argumentos pueden llamarse como sea, no hay nada especial acerca del nombre que se les d\'e9.\
+\
+Pongamos lo aprendido hasta este momento en pr\'e1ctica. \
+Utilizando la funci\'f3n que escribimos en el la lecci\'f3n 4:\
+\
+Una funci\'f3n que divide cualquier n\'famero por 2 y lo multiplica por PI\
+\
+(\
+f = \{ | x |\
+	(x / 2) * pi;\
+\};\
+)\
+\
+Creamos un array a trav\'e9s del cual iterar\
+\
+a = [10,20,30,100,2,5,60,30];\
+\
+Escribimos nuestro loop\
+(\
+a.do\{ | obj |  \
+   f.value(obj).postln; // evaluar la funci\'f3n con cada objeto\
+\}; \
+)\
+\
+Aqu\'ed otra forma de escribir lo mismo dentro de un contexto local, quiz\'e1s es as\'ed m\'e1s claro:\
+\
+\
+Con esta t\'e9cnica tenemos otra conveniencia. Podemos generar un array mediante el uso de otro m\'e9todo que funciona de forma similar:\
+\
+x = 10.collect\{arg i;  i \};\
+\
+\
+x\
+\
+x es ahora un array con n\'fameros del 0 al 9!\
+\
+\
+Esto es muy \'fatil porque podemos generar arrays num\'e9ricos realizando operaciones sobre los n\'fameros. Por ejemplo, generemos los numeros del 100 al 1000\
+\
+y = 10.collect\{arg i; (i + 1) * 100 \};\
+\
+Puedes entender por qu\'e9 escrib\'ed (i + 1)?\
+\
+Recuerda que siempre contamos desde 0. Aqu\'ed a\'f1ado 1 a la cuenta, para empezar desde 1. 1 * 100 = 100, 2 * 100  = 200, etc\'85\
+\
+Con este conocimiento, podemos finalmente comenzar a hacer sonidos!\
+\
+\
+\
+\
+\
+\
+\
+\
+\
+\
+\
+\
+\
+\
+\
+}

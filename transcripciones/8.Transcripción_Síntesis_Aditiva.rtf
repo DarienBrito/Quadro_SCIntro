@@ -1,0 +1,153 @@
+{\rtf1\ansi\ansicpg1252\cocoartf1404\cocoasubrtf470
+{\fonttbl\f0\fswiss\fcharset0 Helvetica;}
+{\colortbl;\red255\green255\blue255;}
+\paperw11900\paperh16840\margl1440\margr1440\vieww17180\viewh14500\viewkind0
+\pard\tx566\tx1133\tx1700\tx2267\tx2834\tx3401\tx3968\tx4535\tx5102\tx5669\tx6236\tx6803\pardirnatural\partightenfactor0
+
+\f0\fs24 \cf0 \
+Ahora que entendimos los procesos b\'e1sicos para generar ondas, veamos como podemos generar sonidos m\'e1s complejos.\
+\
+S\'edntesis aditiva es el proceso de crear sonidos mediante superposici\'f3n de ondas.\
+\
+En teor\'eda del sonido digital, cualquier sonido puede ser representado como una serie de ondas sinusoides. Sinteticemos por ejemplo unos cuantos sonidos haciendo uso exclusivo de SinOsc y lo que hasta ahora hemos aprendido.\
+\
+Vamos a crear un peque\'f1o algoritmo que genera una cantidad determinada de ondas sinusoides y las suma para crear una onda compuesta.\
+\
+(\
+\{\
+	var n = 8; // numero de frecuencias deseadas\
+	var intervalo = 100; // intervalo entre frecuencias\
+	var amplitud = 1/n; // 1 sobre el total de osciladores\
+	var frecuencias = n.collect\{|i| (i+1) * intervalo \}; // calcular array de frecuencias del 100 al 1000\
+	var osciladores = frecuencias.collect\{|frecuencia| SinOsc.ar(frecuencia) * amplitud \};\
+	osciladores.sum; //Sumar todos los osciladores del array\
+\}.play\
+)\
+\
+\
+Observa que escalamos la amplitud de cada oscilador por (1 / total de osciladores) para evitar exceder 1.0. De otro modo, la se\'f1al se distorsionar\'eda.\
+\
+Prueba cambiando el valor para el n\'famero de frecuencias deseadas por otros valores...\
+\
+Crees que puedes hacer que esta se\'f1al se convierta en stereo?\
+\
+Como hab\'edamos visto en el cap\'edtulo anterior, podemos crear ondas multicanales pasando un array para alg\'fan argumento de los osciladores o mediante el uso del operador !\
+\
+Tras haber entendido el algoritmo anterior, veamos un m\'e9todo m\'e1s simple de realizar lo mismo, usando una Clase espec\'edfica para ese prop\'f3sito\
+\
+La clase Klnag genera un banco de ondas sinusoides, semejante al que acabamos de crear.\
+\
+Klang.ar(\
+	specificationsArrayRef: array de arrays [frecuencias, amplitudes, fases],\
+	freqscale: escalador para frecuencias,\
+	freqoffset: compensaci\'f3n\
+);\
+\
+Generemos un sonido usando esta clase:\
+\
+(\{\
+	var frecuencias = [100, 200, 400, 800, 1600];\
+	var amplitudes = [1.0, 0.5, 0.25, 0.125] * 0.125; // escalar para el volumen\
+	var fases = [0,0,0,0];\
+	Klang.ar(`[frecuencias, amplitudes, fases]); // n\'f3tese el uso de " ` "\
+\}.play;\
+)\
+\
+Hay algo nuevo en este c\'f3digo que vale aclarar. Nota que el s\'edmbolo de acento grave  ` le dice al interprete que al pasar el array no estamos pidiendo expansi\'f3n multicanal, sino que estamos pasando un array de valores. Esto es importante al pasar arrays a generadores de unidades o UGens, como en este caso. Cabe tambi\'e9n aclarar que es mas bien una rareza. No existen solo otros muy aislados casos en donde este s\'edmbolo es necesario. \
+\
+- PAUSA -\
+\
+\pard\tx566\tx1133\tx1700\tx2267\tx2834\tx3401\tx3968\tx4535\tx5102\tx5669\tx6236\tx6803\pardirnatural\partightenfactor0
+
+\b \cf0 Diapositivas\
+\
+\pard\tx566\tx1133\tx1700\tx2267\tx2834\tx3401\tx3968\tx4535\tx5102\tx5669\tx6236\tx6803\pardirnatural\partightenfactor0
+
+\b0 \cf0 Tengamos en claro que:\
+\
+- Todo funci\'f3n que produce un sonido, es evaluada en el Servidor\
+\
+El servidor es un programa adicional que corre tras bastidores y que se encarga de computar todos los sonidos que creamos\
+\
+- UGens (unit generators), son todas las clases que en SuperCollider generan valores.\
+\
+Estas son por ejemplo todos los osciladores\
+\
+- Usa el acento grave para evitar expansi\'f3n multicanal en ciertas UGens\
+\
+En casos muy aislados, el uso de este s\'edmbolo es necesario para especificar un array como tal en lugar de una se\'f1al multicanal. Procura no confundirte con esto.\
+\
+- PAUSA -\
+\
+\pard\tx566\tx1133\tx1700\tx2267\tx2834\tx3401\tx3968\tx4535\tx5102\tx5669\tx6236\tx6803\pardirnatural\partightenfactor0
+
+\b \cf0 C\'f3digo\
+\pard\tx566\tx1133\tx1700\tx2267\tx2834\tx3401\tx3968\tx4535\tx5102\tx5669\tx6236\tx6803\pardirnatural\partightenfactor0
+
+\b0 \cf0 \
+Procedamos a escribir un generador para s\'edntesis aditiva. Vamos a utilizar variables globales para hacer nuestro c\'f3digo re-utilizable en cualquier contexto. Recuerda que creamos estas variables con el s\'edmbolo ~\
+\
+Escribamos una funci\'f3n para producir valores al azar, Recuerda que podemos obtener n\'fameros al azar usando los m\'e9todos para \'edntegros y decimales rand y rana:\
+\
+1.rand \
+rrand(1, 10);\
+rrand(1.0, 10);\
+\
+(\
+~genVals = \{|n|\
+	var frecs = n.collect\{|i| rrand(80, 12000) \}; // frecuencias al azar entre 80 y 12000hz\
+	var amps = n.collect\{|i| 1.0.rand \}; // valores al azar entre 0.0 y 1.0\
+	var fases = n.collect\{|i| 0.0 \}; // array de fases en 0.0\
+	[frecs, amps, fases];\
+\};\
+)\
+\
+~genVals.value(10); // prueba\
+\
+\
+Podemos usar esta funci\'f3n en combinaci\'f3n con Klang:\
+\
+(\{\
+	var valores = ~genVals.value(10); // generar 10 valores distintos\
+	var sins = Klang.ar(`valores); // n\'f3tese el uso de " ` "\
+	sins = sins * 0.21; // escalar para reducir la amplitud\
+\}.play;\
+)\
+\
+Cada vez que evaluamos esta expresi\'f3n, tenemos un resultado distinto. Sin embargo tenemos\
+que cancelar el sonido manualmente con "cmd + ." cada vez que queremos otra evaluaci\'f3n... \'bfno ser\'eda c\'f3modo hacerlo autom\'e1ticamente, digamos con un generador que disminuya el volumen lentamente por s\'ed solo?\
+\
+Los generadores Line y XLine nos permiten especificar un valor de inicio, un valor de llegada y una duraci\'f3n para atravesar la diferencia. El nombre correcto para este proceso es interpolaci\'f3n. Usando estos generadores podemos modular la amplitud de la se\'f1al y tener el efecto que acabamos de mencionar\
+\
+Usemos el UGen Line para controlar la amplitud general del oscilador de modo que tenga una duraci\'f3n exacta y termine autom\'e1ticamente. \
+\
+(\{\
+	var valores = ~genVals.value(10);\
+	var sin = Klang.ar(`valores) * Line.kr(1, 0, 1, doneAction: 2);\
+	sin = sin * 0.25; // escalamos el volumen para evitar hacernos da\'f1o\
+\}.play;\
+)\
+\
+Hagamos ahora esta se\'f1al est\'e9reo y encapsul\'e9mosla en otra funci\'f3n, de modo que podamos usarla con mayor facilidad:\
+(\
+~bancoSins = \{ |numValores|\
+	\{\
+		var valores = ~genVals.value(numValores);\
+		var sins = Klang.ar(`valores ! 2) * Line.kr(1, 0, 1, doneAction: 2);\
+		sins * 0.25; // escalar para amplitud general\
+	\}.play;\
+\};\
+)\
+\
+// Prueba los resultados con un n\'famero de frecuencias distinto...\
+~bancoSins.value(1);\
+~bancoSins.value(5);\
+~bancoSins.value(10);\
+\
+ un atajo para evaluar una funci\'f3n es omitir la palabra "value". Lo siguiente funciona:\
+~bancoSins.(10);\
+\
+\'bfPuedes entender esta funci\'f3n claramente? Si no, revisa los conceptos previos, pronto haremos peque\'f1os experimentos con m\'fasica generativa y es fundamental entender los pasos que hemos tomado.\
+\
+He omitido explicar por ahora lo que doneAction: 2 hace, esto lo explicar\'e9 en el siguiente cap\'edtulo, que trata de envolventes o \'93envelopes\'94 en ingl\'e9s.\
+}

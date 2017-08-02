@@ -1,0 +1,93 @@
+\chapter{Coding}
+
+\section{¿Qué es coding?}
+
+Este tutorial trata sobre el lenguaje de programación SuperCollider y sus capacidades para crear sonidos y música. Estarás por tanto lidiando con código como método creativo. La práctica de escribir código es denominada ``coding''. Ten en claro por tanto que todo lo que creas está basado en texto. Mientras más rápido escribas y entiendas las palabras necesarias para ejecutar instrucciones con este texto, mejor. Por esta razón, el curso es un tanto agresivo, conciso y rápido, a fin de forzarte a escribir inmediatamente pequeños programas, incluso si no los entiendes del todo. 
+
+El código de computadoras es intimidante al principio y puede ser frustrante no poder entender inmediatamente su modo de operación, dado que es un lenguaje un tanto antinatural para la mayoría de las personas. Piensa sin embargo que es un lenguaje creado por seres humanos para seres humanos, \textit{ergo} cualquier persona es capaz de aprenderlo con el entrenamiento adecuado. La mejor forma de hacerlo es copiando, cambiando parámetros, cometiendo errores y construyendo tus propias instrucciones en base a lo que vas aprendiendo. 
+
+La razón por la que es interesante aprender a programar es que nos da una capacidad creativa enorme y un poder expresivo gigantesco. En la actualidad, el código ha pasado a ser una herramienta muy cercana a la práctica artística y hay toda una nueva corriente de arte creada con medios digitales expresados con código. En audio, en concreto, entender los principios de síntesis a nivel de programación te permitirán dominar técnicas en cualquier otra plataforma y a generar cientos de sonidos con pequeños cambios de parámetros en lugar de usar incontables horas moviendo diales y haciendo click en botones.
+
+Para toda tarea necesitamos tener un conocimiento básico de ciertas nociones antes de comenzar a realizar la tarea en sí. Imagina que estás por ejemplo cocinando algo tan simple como un plato de spagetti. El mínimo conocimiento previo que necesitas para hacer este plato es saber hervir el agua, debes tener los productos adecuados, como la pasta, cebollas, ajo y además tener las herramientas adecuadas, como una olla, una sartén, un escurridor, un plato y utensillos. Con SuperCollider, es exactamente lo mismo. \underline{Antes de hacer sonidos}, necesitamos primero saber qué productos tenemos disponibles y que herramientas son las adecuadas para cada tarea. Por esto, sé paciente y trata de entender los bloques básicos de programación que se presentan en el curso antes de generar nuestro primer sonido. 
+
+\section{¿Cómo aprender?}
+
+Como he sugerido ya, la mejor forma de aprender a programar es copiando\footnote{Asegúrate de escribir lo que copias y no hacer ``copy-paste''} y haciendo pequeños cambios en el código. Por ejemplo, en el primer capítulo de este tutorial verás el programa ``¡Hola Mundo!''. El código para este programa se ve así:
+
+\begin{lstlisting}
+``Hola mundo!''.postln;
+\end{lstlisting}
+
+Inmediatamente puedes probar cambiando algo en este código:
+
+\begin{lstlisting}
+``Chao mundo!''.postln;
+\end{lstlisting}
+
+Esta pequeña alteración, si ejecutada, te permite concluir que lo que va entre comillas es el texto a ser impreso y que probablemente no importa realmente lo que vaya escrito dentro:
+
+\begin{lstlisting}
+``Esto puede ser cualquier cosa''.postln;
+\end{lstlisting}
+
+Puedes continuar viendo más elementos en esta pequeña línea. ¿Qué pasa si alteras el punto por una coma?
+
+\begin{lstlisting}
+``Esto puede ser cualquier cosa'',postln; 
+\end{lstlisting}
+
+¡Error! ¿Y si alteramos postln?
+
+\begin{lstlisting}
+``Esto puede ser cualquier cosa''.imprimir; 
+\end{lstlisting}
+
+¡Otro error¡ Mmm... 
+
+Este ejercicio tan simple ha sido capaz de enseñarnos ya varias cosas muy útiles. Podemos deducir por ejemplo que el punto en la instrucción es necesario y que no puede ser por ejemplo una coma, y que ``postln'' es una palabra especial para imprimir en la consola y por tanto deben existir otras palabras especiales para realizar acciones diferentes. 
+
+Pese a que puedes pensar que esto no tiene nada que ver con hacer sonidos o música, resulta que nos ayuda a comprender cómo funciona una computadora ¡Verás que cuando escribas código para generar audio saber lo que este pequeño programa hace y por qué funciona es muy útil!
+
+\section{¿Qué es un repositorio?}
+
+Todo el código de soporte para este curso está disponible en un repositorio online alojado en el sitio Github. Ok, ¿pero qué es un repositorio?
+
+Un repositorio es un archivo en donde se almacena información digital. En nuestro caso, es el lugar en donde todo el material de soporte para el curso se aloja. Este material contiene:
+
+\begin{itemize}
+\item El código de cada capítulo
+\item Transcripciones de los vídeos 
+\item El código LaTeX para generar este documento
+\item Este PDF
+\item El código para generar los sonidos de introducción de cada vídeo
+\end{itemize}
+
+Para acceder al repositorio puedes hacer click en este \href{https://github.com/DarienBrito/Quadro_SCIntro} {\textbf{link}} o puedes ir a la siguiente dirección:
+
+\small{
+\begin{verbatim}
+https://github.com/DarienBrito/Quadro_SCIntro
+\end{verbatim}
+}
+
+\section{¿Qué es Open Source?}
+
+\textit{Open Source} es la denominación en inglés para referirse a software cuyo código fuente es libre, es decir, que puede ser visto y modificado por cualquier usuario. 
+
+A diferencia de los programas comunes, que funcionan como una caja negra que podemos usar pero a cuyo código fuente no podemos acceder, proyectos de código libre hacen todo disponible sin ninguna restricción. SuperCollider es un proyecto \textit{open source}, así como el repositorio para este curso.
+
+\section{¿Qué es GitHub?}
+
+De acuerdo a la explicacion en la página oficial de Git:
+
+\begin{quote}
+GitHub es una plataforma de desarrollo colaborativo de software para alojar proyectos utilizando el sistema de control de versiones Git.
+\end{quote}
+
+Una gran cantidad de proyectos \textit{open source} se alojan en GitHub porque es una herramienta muy útil para compartir y modificar código y documentos online. Si quieres aprender más al respecto, puedes leer la documentación en este \href{http://conociendogithub.readthedocs.io/en/latest/data/introduccion/} {\textbf{link}} o yendo a la siguiente dirección:
+
+\begin{verbatim}
+http://conociendogithub.readthedocs.io/en/latest/data/introduccion/
+\end{verbatim} 
+
+

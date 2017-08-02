@@ -1,0 +1,141 @@
+{\rtf1\ansi\ansicpg1252\cocoartf1404\cocoasubrtf470
+{\fonttbl\f0\fswiss\fcharset0 Helvetica;}
+{\colortbl;\red255\green255\blue255;}
+\paperw11900\paperh16840\margl1440\margr1440\vieww11260\viewh11740\viewkind0
+\pard\tx566\tx1133\tx1700\tx2267\tx2834\tx3401\tx3968\tx4535\tx5102\tx5669\tx6236\tx6803\pardirnatural\partightenfactor0
+
+\f0\fs24 \cf0 Recuerda:\
+\
+cmd + enter -> ejecutar l\'ednea de c\'f3digo\
+cmd + shift + p -> borrar consola\
+cmd + d -> ayuda\
+\
+(cmd = ctrl en Windows)\
+\
+Vamos a hablar ahora sobre un concepto sumamente \'fatil.\
+\
+Variables son abreviaciones para un objeto. En SuperCollider se crean con el prefijo \'93var\'94\
+\
+Creemos un contexto en el cual asignar una variable:\
+\
+(\
+var val = 1.0;\
+val.postln;\
+)\
+\
+Los par\'e9ntesis delimitan el contexto en el cual la variable es v\'e1lida. En este caso, hemos creado una variable llamada val a la cual le hemos asignado el objeto 1.0. De ahora en adelante, cada vez que escribamos val dentro de este contexto, significar\'e1 1.0.\
+\
+\
+Existe un distinci\'f3n importante entre declarar y asignar una variable. Declarar es implicar que la variable existe, mientras que asignar define un valor para la variable.\
+(\
+var num; // Declaraci\'f3n de la variable \'93num\'94 (existe pero no tiene nada dentro)\
+num = 10; // Asignaci\'f3n del valor 10 para la variable num (ahora x equivale a 10)\
+num.postln; \
+)\
+\
+Creemos ahora 2 variables de diferentes valores. Podemos usar estas definiciones y realizar operaciones directamente sobre ellas\
+\
+(\
+var x = 20;\
+var y = 30;\
+x.postln;\
+y.postln;\
+(x + y).postln;\
+)\
+\
+\
+Las variables son muy \'fatiles porque nos ahorran el trabajo de re-escribir objetos y nos permiten re-utilizar dichos objetos con una \'fanica identificaci\'f3n. \
+\
+Existen variables predefinidas en SuperCollider, como el n\'famero PI, que se usa muy comunmente en programaci\'f3n de se\'f1ales.\
+\
+Vemos que la siguiente l\'ednea:\
+\
+(\
+var pi = 3.1415926535898; // resulta en un error\
+)\
+\
+pi funciona porque pi ya est\'e1 reservada de antemano en SuperCollider y no es necesario o posible darle un valor diferente al que tiene. Existen algunos casos de esto que se encontrar\'e1n m\'e1s adelante. \
+\
+Es importante entender que una variable puede ser cualquier palabra siempre y cuando no empiece con una letra may\'fascula o un n\'famero y siempre que no contenga caracteres especiales, como tildes.\
+\
+Por ejemplo:\
+\
+(\
+var parangaricutirimicuaro = 1;\
+parangaricutirimicuaro;\
+)\
+\
+(\
+var Parangaricutirimicuaro = 1; // error. May\'fasculas son reservadas para Clases\
+parangaricutirimicuaro;\
+)\
+\
+(\
+var 1Parangaricutirimicuaro = 1; // error. No puede iniciar con un n\'famero\
+parangaricutirimicuaro\
+)\
+\
+En SuperCollider existen 2 tipos de variables: locales y globales\
+\
+Las variables locales requieren de un contexto delimitado por par\'e9ntesis, como hasta ahora hemos visto.\
+\
+(\
+var local = 1;\
+local.postln;\
+)\
+\
+local; // error porque local no est\'e1 definida en este contexto\
+\
+Las variables globales funcionan en cualquier lugar, independientemente del contexto\
+\
+~global = 2;\
+~global.postln;\
+\
+(\
+var local = 1;\
+local.postln;\
+~global.postln;\
+)\
+\
+// Existen variables globales pre-declaradas en SuperCollider. Estos son las letras del abecedario: a,b,c...z\
+\
+a = 1;\
+b = 2;\
+z = 10;\
+a + b + z; // esta operaci\'f3n nos devuelve el resultado\
+\
+Todo en SuperCollider es un objeto, por tanto, todo puede ser asignado a una variable.\
+\
+a = 1; //n\'famero \'edntegro (integer)\
+b = 2.0 //n\'famero decimal (float)\
+c = "\'a1hola mundo!" // string\
+d = 'a' // caracter\
+e = \{ "\'a1hola mundo!".postln \}; // funci\'f3n\
+f = a; // una variable puede tener el valor de otra variable\
+g = []; // array\
+\
+Existen muchos m\'e1s objetos. En este curso introductorio, nos enfocaremos solamente en\
+los previamente descritos.\
+\
+\
+\
+\
+\
+\
+\
+\
+\
+\
+\
+\
+\
+\
+\
+\
+\
+\
+\
+\
+\
+\
+}
