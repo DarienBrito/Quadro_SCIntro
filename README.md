@@ -1,11 +1,31 @@
 # Quadro_SCIntro
 ## SuperCollider: curso introductorio
 
-!Bienvenido al repositorio del curso introductorio al lenguaje de programación SuperCollider!
+¡Bienvenid@ al repositorio del curso introductorio al lenguaje de programación SuperCollider!
 
-Aquí encontrarás material útil para seguir el curso además del código de cada lección. El material disponible es absolutamente gratuito y puede ser usado y modificado sin ninguna restricción. Encuentra en la sección de contenidos pequeños fragmentos que sirven de síntesis de lo visto en cada capítulo. Para descargar todo el material en un archivo ZIP haz click aquí.
+Aquí encontrarás material útil para seguir el curso además del código de cada lección. El material disponible es absolutamente gratuito y puede ser usado y modificado sin ninguna restricción. Encuentra en la sección de contenidos pequeños fragmentos que sirven de síntesis de lo visto en cada capítulo. Para descargar todo el material en un archivo ZIP haz click [aquí]().
 
 ## Contenidos
+
+1. Código de cada módulo [->](https://github.com/DarienBrito/Quadro_SCIntro/tree/master/codigo_modulos)
+
+Encontrarás aqui archivos con todo el código que hemos visto en los vídeos del tutorial.
+
+2. Transcripciones [->](https://github.com/DarienBrito/Quadro_SCIntro/tree/master/transcripciones)
+
+Si quieres tener un documento con una transcripción de lo que vimos en los vídeos, puedes acceder a esta carpeta y descargar los archivos
+
+3. Información preliminar [->] (https://github.com/DarienBrito/Quadro_SCIntro/tree/master/info_preliminar_LaTeX)
+
+El archivo PDF con información preliminar sobre el curso fue generado usando LaTeX, un lenguaje de programación para archivos de texto en alta calidad. Encontrarás aquí el código fuente para generar este texto además del PDF final.
+
+4. Sonidos de introducción
+
+Cada módulo en nuestro tutorial tiene su propio sonido introductorio. Encontrarás aquí el código con el que generé esos sonidos.
+
+## Temas
+
+Estos son los temas que hemos visto en el tutorial. Añado un poco de código para refrescarte la memoria. Todas estas líneas son directamente ejecutables.
 
 1. Hola mundo!
 
