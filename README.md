@@ -19,10 +19,6 @@ Si quieres tener un documento con una transcripción de lo que vimos en los víd
 
 El archivo PDF con información preliminar sobre el curso fue generado usando LaTeX, un lenguaje de programación para archivos de texto en alta calidad. Encontrarás aquí el código fuente para generar este texto además del PDF final.
 
-4. [Sonidos de introducción]()
-
-Cada módulo en nuestro tutorial tiene su propio sonido introductorio. Encontrarás aquí el código con el que generé esos sonidos.
-
 ## Temas
 
 Estos son los temas que hemos visto en el tutorial. Añado un poco de código para refrescarte la memoria. Todas estas líneas son directamente ejecutables.
@@ -118,12 +114,3 @@ SynthDef(\sinusoide, { |freq = 220, amp = 0.5|
 Synth(\sinusoide, [\freq, 400, \amp, 0.6]);
 Synth(\sinusoide, [\freq, 700, \amp, 0.6]);
 ```
-12. Rutinas 
-
-```js
-fork{ inf.do{|i| i.postln; 1.wait; } };
-```
-
-13. Bonus
-
-Un pequeño programa de música generativa
